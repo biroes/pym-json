@@ -17,6 +17,21 @@ arrays and scalars) using reflection, and also exposes a low-level
 | **Java** | 21 or newer |
 | **Build** | Maven 3.9+ |
 
+## Contents
+
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Quick start](#quick-start)
+- [Configuration](#configuration)
+- [Annotations](#annotations)
+- [Supported types](#supported-types)
+- [Working with the raw tree](#working-with-the-raw-tree)
+- [Behaviour notes](#behaviour-notes)
+- [Building and testing](#building-and-testing)
+- [`ppjson` — native JSON pretty-printer](#ppjson--native-json-pretty-printer)
+- [License](#license)
+
 ## Features
 
 - **Zero runtime dependencies** — just the JDK.
@@ -217,6 +232,69 @@ exhaustive `switch` pattern matching without a `default` branch:
 mvn compile      # compile the library
 mvn test         # run the test suite
 mvn clean install
+```
+
+## `ppjson` — native JSON pretty-printer
+
+The repository ships a small command-line pretty-printer,
+`com.biroes.pym.json.cli.PrettyPrintCli`, that reads JSON from a file argument
+or standard input and writes it back formatted. It is built on top of
+`pym-json` and is meant to be compiled to a standalone native binary with
+[GraalVM](https://www.graalvm.org/) `native-image`.
+
+### Usage
+
+```
+ppjson [options] [file]
+
+  Reads JSON from <file> or, when omitted / '-', from standard
+  input and writes it back pretty-printed to standard output.
+
+Options:
+  -i, --indent <N>   indent size in spaces (default 2)
+  -t, --tab          use a tab per level (overrides --indent)
+  -c, --compact      compact, single-line output
+  -n, --no-nulls     omit object members whose value is null
+  -h, --help         show this help and exit
+```
+
+Examples:
+
+```bash
+echo '{"a":1,"b":[2,3]}' | ppjson
+ppjson --compact file.json
+ppjson --indent 4 file.json
+```
+
+Exit codes: `0` success, `1` parse/I/O error, `2` usage error.
+
+### Building the native binary
+
+The `native` Maven profile wires up the
+[`native-maven-plugin`](https://graalvm.github.io/native-build-tools/latest/):
+
+```bash
+mvn -Pnative -DskipTests package     # produces target/ppjson
+```
+
+When the `native-maven-plugin` cannot be resolved through the configured
+Maven mirror (e.g. a corporate Artifactory proxy), use the helper script
+which invokes `native-image` directly. It activates GraalVM via
+[SDKMAN!](https://sdkman.io), builds the jar and compiles the binary:
+
+```bash
+./scripts/build-native.sh            # builds target/native/ppjson
+./scripts/build-native.sh -v         # verbose native-image output
+```
+
+Requires a GraalVM JDK installed through SDKMAN! (default
+`25.0.1-graal`; override with `GRAALVM_JAVA=<candidate>`). The resulting
+binary is around 7 MB, starts in ~3 ms and has no JVM dependency.
+
+Smoke-test the binary against `scripts/test.json`:
+
+```bash
+./scripts/test-native.sh
 ```
 
 ## License

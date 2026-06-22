@@ -11,6 +11,16 @@ Lightweight, zero-dependency JSON library for Java 21. Single Maven module (`com
 - All tests live in one class: `src/test/java/com/biroes/pym/json/JsonTest.java` (JUnit 5 / Jupiter).
 - Current version is `1.0.0` (release). Keep `pom.xml` `version` in sync with the version shown in `README.md`.
 
+## `ppjson` CLI & native image
+
+- `src/main/java/com/biroes/pym/json/cli/PrettyPrintCli.java` is a small CLI that reads JSON from a file or stdin and writes it pretty-printed using `Json.readTree` + `Json.write(tree, out)`. Main class is `com.biroes.pym.json.cli.PrettyPrintCli`; image name is `ppjson`.
+- Options: `--indent N`, `--tab`, `--compact`, `--no-nulls`, `--help`. Exit codes: 0 ok, 1 parse/I/O error, 2 usage error. `-` as the file argument means stdin.
+- The `native` Maven profile (`native-maven-plugin` `1.1.2`) builds a standalone binary. Run with `mvn -Pnative -DskipTests package`.
+- The configured Maven mirror (`mirrorOf=*` in `~/.m2/settings.xml`) does **not** proxy the GraalVM plugin, so `mvn -Pnative` typically fails with "Unresolveable build extension". In that case use `scripts/build-native.sh`, which activates GraalVM via SDKMAN! and invokes `native-image` directly on the built jar. Default GraalVM candidate: `25.0.1-graal` (override via `GRAALVM_JAVA`).
+- `scripts/test-native.sh` smoke-tests `target/native/ppjson` against `scripts/test.json` in all modes (pretty, compact, indent=4, tab, no-nulls, stdin, stdin via `-`).
+- GraalVM is activated via SDKMAN! in the scripts; `sdkman-init.sh` references variables that are unset under `set -u`, so the scripts temporarily disable `set -u` around `source` + `sdk use`.
+- Native build flags: `--no-fallback`, `-H:+ReportExceptionStackTraces`, `--install-exit-handlers`. Do not introduce a fallback image; the CLI must be fully ahead-of-time compiled.
+
 ## Architecture (not obvious from filenames)
 
 - Public API surface is intentionally tiny: only `Json`, `JsonConfig`, `JsonException`, the `model.JsonValue` tree, and the two annotations are `public`. `ObjectMapper`, `JsonParser`, `JsonWriter` are **package-private** — keep them that way; expose features through `Json`.
