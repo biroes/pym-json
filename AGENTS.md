@@ -9,6 +9,7 @@ Lightweight, zero-dependency JSON library for Java 21. Single Maven module (`com
 - Requires **JDK 21** (`maven.compiler.release=21`). Code uses sealed interfaces, records, and pattern-matching `switch` (the last of these is final only in 21); older JDKs will not compile.
 - Run a single test: `mvn test -Dtest=JsonTest#methodName`
 - All tests live in one class: `src/test/java/com/biroes/pym/json/JsonTest.java` (JUnit 5 / Jupiter).
+- Current version is `1.0.0` (release). Keep `pom.xml` `version` in sync with the version shown in `README.md`.
 
 ## Architecture (not obvious from filenames)
 
@@ -24,3 +25,10 @@ Lightweight, zero-dependency JSON library for Java 21. Single Maven module (`com
 - All failures surface as the unchecked `JsonException`.
 - Streams/Writers passed to `Json` are **not closed** (writers are flushed); caller owns them.
 - `@JsonProperty` renames, `@JsonIgnore` skips; both honored for POJO fields and record components.
+
+## Releasing
+
+- Artifacts (jar, sources, javadoc) are published to Maven Central via the `central-publishing-maven-plugin` (`publishingServerId=central`).
+- The `release` profile activates GPG signing of artifacts (`maven-gpg-plugin`) — required for Central. Run with `mvn clean install -Prelease`.
+- `maven-enforcer-plugin` enforces Maven ≥ 3.9 and JDK ≥ 21 at build time.
+- When releasing, drop the `-SNAPSHOT` suffix from `pom.xml` **and** the README dependency snippet; tag the release.
