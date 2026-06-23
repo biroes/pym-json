@@ -1,4 +1,4 @@
-# pym-json
+# ![pym-json](image/pym-json.png "pym-json")
 
 A lightweight, dependency-free JSON library for Java 21.
 
@@ -7,15 +7,17 @@ between JSON text and plain Java objects (POJOs, records, collections, maps,
 arrays and scalars) using reflection, and also exposes a low-level
 `JsonValue` tree for when you need full control.
 
-| | |
-|---|---|
-| **Group / Artifact** | `com.biroes.pym:pym-json` |
-| **Homepage** | https://www.biroes.com |
-| **Issues** | https://github.com/biroes/pym-json/issues |
-| **License** | [MIT](https://opensource.org/licenses/MIT) |
-| **Maintainer** | Andreas Schneider &lt;andreas@biroes.com&gt; (biroes) |
-| **Java** | 21 or newer |
-| **Build** | Maven 3.9+ |
+|                      |                                                  |
+|----------------------|--------------------------------------------------|
+| **Group / Artifact** | `com.biroes.pym:pym-json`                        |
+| **Homepage**         | https://www.biroes.com                           |
+| **Issues**           | https://github.com/biroes/pym-json/issues        |
+| **License**          | [MIT](https://opensource.org/licenses/MIT)       |
+| **Maintainer**       | Andreas Schneider                                |
+| **Contact**          | [andreas@biroes.com](mailto:andreas@biroes.com)  |
+| **Company**          | biroes                                           |
+| **Stack**            | Java 21+, Bash                                   |
+| **Build**            | Maven 3.9+                                       |
 
 ## Contents
 
