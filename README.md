@@ -32,6 +32,7 @@ arrays and scalars) using reflection, and also exposes a low-level
 - [Behaviour notes](#behaviour-notes)
 - [Building and testing](#building-and-testing)
 - [`ppjson` — native JSON pretty-printer](#ppjson--native-json-pretty-printer)
+- [Star History](#star-history)
 - [License](#license)
 
 ## Features
@@ -299,6 +300,16 @@ Smoke-test the binary against `scripts/test.json`:
 ./scripts/test-native.sh
 ```
 
+## Star History
+
+<a href="https://www.star-history.com/?repos=biroes%2Fpym-json&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=biroes/pym-json&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=biroes/pym-json&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=biroes/pym-json&type=date&legend=top-left" />
+ </picture>
+</a>
+
 ## License
 
 pym-json is released under the [MIT License](https://opensource.org/licenses/MIT).
@@ -316,14 +327,3 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
-
-
-## Star History
-
-<a href="https://www.star-history.com/?repos=biroes%2Fpym-json&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=biroes/pym-json&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=biroes/pym-json&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=biroes/pym-json&type=date&legend=top-left" />
- </picture>
-</a>
